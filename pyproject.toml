@@ -1,0 +1,11 @@
+[project]
+name = "b64-encode-slicer"
+version = "0.1.0"
+description = "Base64-encode a file, split it into ≤1024 KB chunks, and reconstruct the original."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+encode-split = "encode_split:main"
+reconstruct = "reconstruct:main"
