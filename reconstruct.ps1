@@ -56,7 +56,7 @@ if (-not (Test-Path -LiteralPath $outputDir)) {
   New-Item -ItemType Directory -Path $outputDir -Force | Out-Null
 }
 
-Write-Output ("Reassembling '{0}' from {1} chunk(s) …" -f $baseName, $parts.Count)
+Write-Output ("Reassembling '{0}' from {1} chunk(s) ..." -f $baseName, $parts.Count)
 $builder = [System.Text.StringBuilder]::new()
 foreach ($part in $parts) {
   Write-Output ("  Read: {0}" -f $part.Path)
@@ -66,7 +66,7 @@ foreach ($part in $parts) {
 try {
   $decodedBytes = [System.Convert]::FromBase64String($builder.ToString())
 } catch {
-  Write-Error ("Base64 decoding failed — the chunk files may be corrupted or incomplete. Details: {0}" -f $_.Exception.Message)
+  Write-Error ("Base64 decoding failed - the chunk files may be corrupted or incomplete. Details: {0}" -f $_.Exception.Message)
   exit 1
 }
 
