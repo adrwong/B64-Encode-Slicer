@@ -1,5 +1,3 @@
-$ErrorActionPreference = 'Stop'
-
 param(
   [Parameter(Mandatory = $true, Position = 0)]
   [string]$ChunksDir,
@@ -7,6 +5,8 @@ param(
   [Parameter(Position = 1)]
   [string]$Output
 )
+
+$ErrorActionPreference = 'Stop'
 
 try {
   $ChunksDir = (Resolve-Path -LiteralPath $ChunksDir).Path
