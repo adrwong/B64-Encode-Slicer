@@ -69,6 +69,32 @@ uv run reconstruct.py photo.jpg.parts/
 
 ---
 
+## Script 3 — `reconstruct.sh` (Bash)
+
+Reconstructs the original file using only POSIX tools (no Python).
+
+```bash
+./reconstruct.sh <chunks_dir> [-o <output_file>]
+```
+
+- `chunks_dir`: Folder containing the `*.part<N>.txt` chunk files.
+- `-o / --output`: Optional path for the reconstructed file. Defaults to `<original_filename>` placed next to `chunks_dir`.
+
+---
+
+## Script 4 — `reconstruct.ps1` (PowerShell)
+
+Reconstructs the original file on Windows using PowerShell (no Python).
+
+```powershell
+.\reconstruct.ps1 <chunks_dir> [-o <output_file>]
+```
+
+- `chunks_dir`: Folder containing the `*.part<N>.txt` chunk files.
+- `-o / --output`: Optional path for the reconstructed file. Defaults to `<original_filename>` placed next to `chunks_dir`.
+
+---
+
 ## Running as installed commands
 
 After `uv sync` you can also invoke the scripts through their console entry points:
