@@ -24,9 +24,16 @@ $chunkSize = 1024 * 1024
 $leaf = Split-Path -Leaf $InputDir
 $parent = Split-Path -Parent $InputDir
 $archiveName = "$leaf.tar"
+$startLocation = (Get-Location).Path
 
 if (-not $OutputDir) {
   $OutputDir = "$InputDir.parts"
+}
+
+if ([System.IO.Path]::IsPathRooted($OutputDir)) {
+  $OutputDir = [System.IO.Path]::GetFullPath($OutputDir)
+} else {
+  $OutputDir = [System.IO.Path]::GetFullPath((Join-Path -Path $startLocation -ChildPath $OutputDir))
 }
 
 if (-not (Test-Path -LiteralPath $OutputDir)) {
