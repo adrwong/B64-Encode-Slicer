@@ -93,7 +93,10 @@ try {
       $extractedRoot = $roots[0].FullName
     } else {
       $names = ($roots | Select-Object -ExpandProperty Name | Sort-Object) -join ', '
-      Write-Error ("Error: expected a single root folder in archive; extraction produced: {0}" -f ($names ? $names : '(none)'))
+      if (-not $names) {
+        $names = '(none)'
+      }
+      Write-Error ("Error: expected a single root folder in archive; extraction produced: {0}" -f $names)
       exit 1
     }
   }

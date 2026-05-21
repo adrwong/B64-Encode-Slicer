@@ -30,7 +30,11 @@ if (-not $OutputDir) {
   $OutputDir = "$InputDir.parts"
 }
 
-$OutputDir = [System.IO.Path]::GetFullPath((Join-Path -Path $startLocation -ChildPath $OutputDir))
+if ([System.IO.Path]::IsPathRooted($OutputDir)) {
+  $OutputDir = [System.IO.Path]::GetFullPath($OutputDir)
+} else {
+  $OutputDir = [System.IO.Path]::GetFullPath((Join-Path -Path $startLocation -ChildPath $OutputDir))
+}
 
 if (-not (Test-Path -LiteralPath $OutputDir)) {
   New-Item -ItemType Directory -Path $OutputDir -Force | Out-Null
