@@ -46,11 +46,13 @@ jobs:
           .\encode_split_folder.ps1 $in $parts | Out-Null
           .\reconstruct_folder.ps1 $parts $out | Out-Null
 
-          $inFiles = Get-ChildItem -LiteralPath $in -Recurse -File |
-            ForEach-Object { $_.FullName.Substring($in.Length + 1) } |
+          $inRoot = (Resolve-Path -LiteralPath $in).Path
+          $outRoot = (Resolve-Path -LiteralPath $out).Path
+          $inFiles = Get-ChildItem -LiteralPath $inRoot -Recurse -File |
+            ForEach-Object { [System.IO.Path]::GetRelativePath($inRoot, $_.FullName) } |
             Sort-Object
-          $outFiles = Get-ChildItem -LiteralPath $out -Recurse -File |
-            ForEach-Object { $_.FullName.Substring($out.Length + 1) } |
+          $outFiles = Get-ChildItem -LiteralPath $outRoot -Recurse -File |
+            ForEach-Object { [System.IO.Path]::GetRelativePath($outRoot, $_.FullName) } |
             Sort-Object
 
           $diff = Compare-Object `
@@ -61,8 +63,8 @@ jobs:
             throw "File lists differ."
           }
           foreach ($rel in $inFiles) {
-            $inPath = Join-Path $in $rel
-            $outPath = Join-Path $out $rel
+            $inPath = Join-Path $inRoot $rel
+            $outPath = Join-Path $outRoot $rel
             $inHashObj = Get-FileHash -Algorithm SHA256 -LiteralPath $inPath
             $outHashObj = Get-FileHash -Algorithm SHA256 -LiteralPath $outPath
             $inHash = $inHashObj.Hash
