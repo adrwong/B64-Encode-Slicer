@@ -95,6 +95,58 @@ Reconstructs the original file on Windows using PowerShell (no Python).
 
 ---
 
+## Script 5 — `encode_split_folder.sh` (Bash)
+
+Archives a folder into a `.tar`, base64-encodes it, then splits it into `.txt` chunk files of at most **1024 KB** each.
+
+```bash
+./encode_split_folder.sh <input_dir> [-o <output_dir>]
+```
+
+- `input_dir`: Folder you want to encode and split.
+- `-o / --output`: Optional output folder for chunk files. Defaults to `<input_dir>.parts/`.
+
+Chunk files are named `<folder_name>.tar.part<N>.txt`.
+
+---
+
+## Script 6 — `reconstruct_folder.sh` (Bash)
+
+Reconstructs the original folder from chunk files produced by `encode_split_folder.sh`.
+
+```bash
+./reconstruct_folder.sh <chunks_dir> [-o <output_dir>]
+```
+
+- `chunks_dir`: Folder containing the `*.part<N>.txt` chunk files.
+- `-o / --output`: Optional output folder for the reconstructed directory.
+
+---
+
+## Script 7 — `encode_split_folder.ps1` (PowerShell)
+
+Windows PowerShell equivalent of `encode_split_folder.sh`.
+
+```powershell
+.\encode_split_folder.ps1 <input_dir> [<output_dir>]
+```
+
+If `<output_dir>` is omitted, chunks are written to `<input_dir>.parts/`.
+
+---
+
+## Script 8 — `reconstruct_folder.ps1` (PowerShell)
+
+Windows PowerShell equivalent of `reconstruct_folder.sh`.
+
+```powershell
+.\reconstruct_folder.ps1 <chunks_dir> [<output_dir>]
+```
+
+If `<output_dir>` is omitted, the folder is reconstructed next to `<chunks_dir>`.
+
+---
+
 ## Running as installed commands
 
 After `uv sync` you can also invoke the scripts through their console entry points:
